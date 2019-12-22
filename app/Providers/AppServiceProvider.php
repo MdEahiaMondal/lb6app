@@ -24,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Route::resourceVerbs([
+       /* Route::resourceVerbs([
             'create' => 'khanCreate',
             'edit' => 'khanEdit'
-        ]);
+        ]);*/
     }
 }
