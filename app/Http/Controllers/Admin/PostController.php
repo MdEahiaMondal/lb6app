@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Country;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\StorePostRequest;
 use App\Post;
 use App\UserProfile;
-use foo\bar;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 
 class PostController extends Controller
 {

@@ -9,12 +9,17 @@ Route::get('/', function ($name = 'khan') {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/lal/{id}', 'HomeController@lal')->name('lal');
 
 
 
-Route::resource('posts', 'PostController');
 
-Route::resource('users', 'UserProfileController');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function (){
 
+    Route::get('/', 'DashboardController@index')->name('admin.dashboard');
+    Route::resource('posts', 'PostController');
+    Route::resource('categories', 'CategoryController');
+    Route::resource('countries', 'CountryController');
+    Route::resource('roles', 'RoleController');
+    Route::resource('users', 'UserController');
 
+});
