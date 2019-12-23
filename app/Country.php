@@ -20,4 +20,11 @@ class Country extends Model
         );
     }
 
+
+    public function users()
+    {
+
+    }
+
+
 }

@@ -69,9 +69,9 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link {{ Request::is('admin/users*') ? 'active' : '' }}" href="{{ route('users.index') }}">
                             <span data-feather="shopping-cart"></span>
-                            Products
+                            User
                         </a>
                     </li>
                     <li class="nav-item">
