@@ -56,11 +56,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Request::is('admin/*') ? 'active' : '' }}" href="{{ route('roles.index') }}">
+                        <a class="nav-link {{ Request::is('admin/roles*') ? 'active' : '' }}" href="{{ route('roles.index') }}">
                             <span data-feather="file"></span>
                             Role
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::is('admin/categories*') ? 'active' : '' }}" href="{{ route('categories.index') }}">
+                            <span data-feather="shopping-cart"></span>
+                            Category
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="shopping-cart"></span>
