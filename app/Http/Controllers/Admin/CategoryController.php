@@ -125,7 +125,7 @@ class CategoryController extends Controller
     }
 
 
-    public function tinyMceUpload()
+    public function tinyMceUpload() // npm install -D tinymce
     {
         if (request()->hasFile('file')){
 
