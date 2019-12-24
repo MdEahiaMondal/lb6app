@@ -14,7 +14,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function (){
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function (){
 
     Route::get('/', 'DashboardController@index')->name('admin.dashboard');
     Route::resource('posts', 'PostController');

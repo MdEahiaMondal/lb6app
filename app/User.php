@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username',
     ];
 
     /**
@@ -63,6 +63,16 @@ class User extends Authenticatable
     {
         return $this;
     }
+
+
+    public function setUsernameAttribute($username){
+        $setUsername = trim(preg_replace("/[^\w\d]+/i","-",$username),"-");
+        $count = User::where('username', 'like', "%{$setUsername}%")->count();
+        if ($count > 0)
+            $setUsername = $setUsername."-".($count + 1);
+        $this->attributes['username'] = strtolower($setUsername);
+    }
+
 
 
 }
