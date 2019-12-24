@@ -35,29 +35,15 @@
                     <tr>
                         <td>{{ $key +1  }}</td>
                         <td>
-                            @if($user->profile)
-                                <img style="height: 60px; width: 60px" src="{{ Storage::url( $user->profile->avatar) }}" alt="">
-                                @else
-                                <p>No image yet</p>
-                            @endif
+                         <img style="height: 60px; width: 60px" src="{{ Storage::url($user->profile->avatar ?? 'profiles/default.png') }}" alt="">
                         </td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        @if($user->profile)
-                            <td>{{ $user->profile->country->name }}</td>
-                            @else
-                            <p>No country yet</p>
-                        @endif
-
+                        <td>{{ $user->profile->country->name ?? 'N/A' }}</td>
                         <td>
-
-                        @if($user->roles)
-                                @foreach($user->roles as $role)
-                                    <span class="badge badge-primary">{{ $role->name }}</span>
-                                @endforeach
-                        @else
-                            <p>No country yet</p>
-                        @endif
+                        @foreach($user->roles as $role)
+                            <span class="badge badge-primary">{{ $role->name ?? 'N/A' }}</span>
+                        @endforeach
 
 
                         </td>

@@ -62,7 +62,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->name = $request->name;
         $role->save();
-        return redirect()->route('roles.edit', $role->id)->with('success', 'Role Updated success !');
+        return redirect()->route('roles.index', $role->id)->with('success', 'Role Updated success !');
     }
 
 
