@@ -11,8 +11,6 @@
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-    <meta name="theme-color" content="#563d7c">
-
 
     <style>
         .bd-placeholder-img {
@@ -30,8 +28,7 @@
             }
         }
     </style>
-    <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
+
 </head>
 <body>
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -151,6 +148,4 @@
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>
-
-<script src="dashboard.js"></script></body>
 </html>

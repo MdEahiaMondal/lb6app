@@ -123,4 +123,25 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'Category Updated successfully done !');
     }
+
+
+    public function tinyMceUpload()
+    {
+        if (request()->hasFile('file')){
+
+            $setName = sprintf('tinymcs_%s.png', random_int(1,1000));
+
+            $path = request()->file('file')->storeAs('tinymce', $setName, 'public');
+
+        }else{
+            $path = null;
+        }
+        if ($path !== null){
+            return response()->json(['location' => Storage::disk('public')->url($path)], 200);
+        }else{
+            return response()->json(['location' => 'File not uploaded'], 200);
+        }
+    }
+
+
 }

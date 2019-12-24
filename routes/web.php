@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function ($name = 'khan') {
     return view('welcome', compact('name'));
@@ -18,8 +19,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function (){
     Route::get('/', 'DashboardController@index')->name('admin.dashboard');
     Route::resource('posts', 'PostController');
     Route::resource('categories', 'CategoryController');
+    Route::post('/tinymce/upload', 'CategoryController@tinyMceUpload');
     Route::resource('countries', 'CountryController');
     Route::resource('roles', 'RoleController');
     Route::resource('users', 'UserController');
 
 });
+
+

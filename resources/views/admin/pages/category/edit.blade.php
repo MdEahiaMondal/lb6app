@@ -39,7 +39,9 @@
 
             <div class="form-group">
                 <label for="content">Description</label>
-                <textarea class="form-control" name="content" id="content">{{ $category->content }}</textarea>
+                <textarea class="form-control" name="content" id="content">
+                    {!! $category->content !!}
+                </textarea>
             </div>
 
             <div class="form-group">
