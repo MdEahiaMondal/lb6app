@@ -7,7 +7,7 @@ Route::view('/', 'welcome');
 
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin',
-    'middleware' => ['auth', 'can:isAllowed, "admin:publisher:subscriber"', ]],
+    'middleware' => ['auth',]],
     function (){
 
     Route::get('/', 'DashboardController@index')->name('admin.dashboard');

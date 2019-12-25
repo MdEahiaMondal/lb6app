@@ -27,9 +27,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('isAllowed', function ($user, $allowed){
-            $allowed = explode(":",$allowed);
            $roles = $user->roles->pluck('name')->toArray();
-           return array_intersect($allowed, $roles);
+           return array_intersect($allowed->all(), $roles);
         });
 
 

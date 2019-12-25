@@ -56,9 +56,9 @@
                         </td>
 
                         <td>
-                            @canany(['isAdmin', 'isSubscriber'])
+                            @can("isAllowed", collect(['admin', 'subscriber', 'publisher']))
                                 <a  href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-secondary">Show</a>
-                            @endcanany
+
 
                             <a  href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">Edit</a>
                             <a  href="#0" onclick="document.getElementById('user-form-{{ $post->id }}').submit()" class="btn btn-sm btn-secondary">Delete</a>
@@ -67,7 +67,7 @@
                                 @csrf
                                 @method('DELETE')
                             </form>
-
+                            @endcan
                         </td>
 
                     </tr>
