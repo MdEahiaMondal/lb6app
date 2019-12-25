@@ -26,14 +26,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('isAdmin', function ($user){
+        Gate::define('isAllowed', function ($user, $allowed){
+            $allowed = explode(":",$allowed);
            $roles = $user->roles->pluck('name')->toArray();
-           return in_array('Admin', $roles);
+           return array_intersect($allowed, $roles);
         });
 
-        Gate::define('isSubscriber', function ($user){
+
+     /*   Gate::define('isSubscriber', function ($user){
             return in_array('Subscriber', $user->roles->pluck('name')->toArray());
-        });
+        });*/
 
 
     }
