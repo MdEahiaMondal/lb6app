@@ -3,18 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-Route::get('/', function ($name = 'khan') {
-    return view('welcome', compact('name'));
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::view('/', 'welcome');
 
 
-
-
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'password.confirm']], function (){
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin',
+    'middleware' => ['auth', 'password.confirm', 'verified']],
+    function (){
 
     Route::get('/', 'DashboardController@index')->name('admin.dashboard');
     Route::resource('posts', 'PostController');
@@ -25,5 +19,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::resource('users', 'UserController');
 
 });
+
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 

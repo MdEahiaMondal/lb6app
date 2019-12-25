@@ -80,28 +80,7 @@
             @endif
 
             <div class="content">
-
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>SI</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Country</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td></td>
-                        </tr>
-                    </tbody>
-
-                </table>
-
-
+                <h2>Welcome</h2>
             </div>
         </div>
     </body>
