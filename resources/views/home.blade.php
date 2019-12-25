@@ -14,7 +14,14 @@
                         </div>
                     @endif
 
-                    <p>Token: {{ auth()->user()->token_api ?? 'Already Genarate' }}</p>
+                    <p>Token:
+                        @if(session()->has('token'))
+                            {{ session()->get('token') }}
+                            @else
+                            {{ 'Already Genarate' }}
+                         @endif
+                    </p>
+{{--                    <p>Token: {{ auth()->user()->token_api ?? 'Already Genarate' }}</p>--}}
 
                         <form action="{{ route('home') }}" method="post">
                             @csrf
