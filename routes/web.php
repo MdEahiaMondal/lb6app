@@ -7,7 +7,7 @@ Route::view('/', 'welcome');
 
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin',
-    'middleware' => ['auth', 'password.confirm', 'verified']],
+    'middleware' => ['auth', 'password.confirm']],
     function (){
 
     Route::get('/', 'DashboardController@index')->name('admin.dashboard');
@@ -21,8 +21,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin',
 });
 
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::match(['get', 'post'], '/home', 'HomeController@index')->name('home');
 
 

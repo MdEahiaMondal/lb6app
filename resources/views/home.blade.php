@@ -14,21 +14,12 @@
                         </div>
                     @endif
 
+                    <p>Token: {{ auth()->user()->token_api ?? 'Already Genarate' }}</p>
 
-                    @php
-                        $mun = [1,2,3,4,5,6,7,8,9,10,21,0,1,20,1,05,12,0,54,051,20,5454,0,5545];
-                   @endphp
-
-                        @foreach($mun as $num)
-{{--                            {{ dd($loop) }}--}}
-
-                            {{ $loop->even }}
-
-                        @endforeach
-
-
-
-                    You are logged in!
+                        <form action="{{ route('home') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-primary">Genarate Token</button>
+                        </form>
                 </div>
             </div>
         </div>
