@@ -35,7 +35,7 @@
                 <tbody>
                 @foreach($posts as $key=>$post)
                     <tr>
-                        <td>{{ $key +1  }}</td>
+                        <td>{{ $key + 1  }}</td>
                         <td>
                             <img style="height: 60px; width: 60px" src="{{ Storage::url( $post->thumbnail) }}" alt="">
                         </td>
@@ -56,17 +56,16 @@
                         </td>
 
                         <td>
-                            @can("isAllowed", collect(['admin', 'subscriber', 'publisher']))
+
                                 <a  href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-secondary">Show</a>
+                            @can("isAllowed", $post->user->id)
+                                <a  href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">Edit</a>
+                                <a  href="#0" onclick="document.getElementById('user-form-{{ $post->id }}').submit()" class="btn btn-sm btn-secondary">Delete</a>
 
-
-                            <a  href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">Edit</a>
-                            <a  href="#0" onclick="document.getElementById('user-form-{{ $post->id }}').submit()" class="btn btn-sm btn-secondary">Delete</a>
-
-                            <form style="display: none" action="{{ route('posts.destroy', $post->id) }}" id="user-form-{{ $post->id }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                            </form>
+                                <form style="display: none" action="{{ route('posts.destroy', $post->id) }}" id="user-form-{{ $post->id }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
                             @endcan
                         </td>
 
