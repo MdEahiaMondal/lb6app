@@ -56,7 +56,7 @@
                         </td>
 
                         <td width="200">
-
+                            @can("isAllowed", $post->user->id)
                                 <a  href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-secondary">Show</a>
 
                                 <a  href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">Edit</a>
@@ -66,7 +66,7 @@
                                     @csrf
                                     @method('DELETE')
                                 </form>
-
+                             @endcan
                         </td>
 
                     </tr>
