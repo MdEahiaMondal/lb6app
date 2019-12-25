@@ -51,7 +51,7 @@ class PostController extends Controller
             $path = 'posts/default_post.png';
         }
 
-        $user = 1; // add auth::id()
+        $user = auth()->id(); // add auth::id()
 
             $post = new Post();
             $post->user_id = $user;
