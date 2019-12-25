@@ -9,6 +9,7 @@ use App\Http\Requests\Post\StorePostRequest;
 use App\Post;
 use App\Role;
 use App\UserProfile;
+use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -82,7 +83,10 @@ class PostController extends Controller
     public function edit($id)
     {
         $categories = Category::all();
-        $post = Post::findOrFail($id);
+        $post = Post::with(['categories'])->where('id', $id)->orWhere('slug', $id)->first();
+
+        Gate::authorize('allow-Action', $post->user->id);
+
         return  view('admin.pages.post.edit', compact('categories', 'post'));
     }
 
@@ -131,7 +135,9 @@ class PostController extends Controller
 
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::where('id', $id)->orWhere('slug', $id)->first();
+
+        Gate::authorize('allow-Action', $post->user->id);
     /*    if (Storage::disk('public')->exists($post->thumbnail)) {
 
             Storage::disk('public')->delete($post->thumbnail);

@@ -55,10 +55,10 @@
                           {{ $post->created_at }}
                         </td>
 
-                        <td>
+                        <td width="200">
 
                                 <a  href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-secondary">Show</a>
-                            @can("isAllowed", $post->user->id)
+
                                 <a  href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">Edit</a>
                                 <a  href="#0" onclick="document.getElementById('user-form-{{ $post->id }}').submit()" class="btn btn-sm btn-secondary">Delete</a>
 
@@ -66,7 +66,7 @@
                                     @csrf
                                     @method('DELETE')
                                 </form>
-                            @endcan
+
                         </td>
 
                     </tr>

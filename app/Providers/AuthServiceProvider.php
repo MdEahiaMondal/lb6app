@@ -27,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
       Gate::define('isAllowed', 'App\Gate\PostGate@allowed' ); // readable code
+      Gate::define('allow-Action', 'App\Gate\PostGate@allowedAction' ); // readable code
 
     }
 }
