@@ -19,7 +19,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with(['user:id,name', 'categories'])->get();
         return view('admin.pages.post.index', compact('posts'));
     }
 
@@ -30,6 +30,13 @@ class PostController extends Controller
      */
     public function create()
     {
+       $response =  Gate::inspect('create');
+
+        if ($response->denied()){
+
+            return redirect()->back()->with('error', $response->message());
+        }
+
         $categories = Category::all();
         return  view('admin.pages.post.create', compact( 'categories'));
     }
@@ -38,6 +45,14 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+
+        $response =  Gate::inspect('create');
+
+        if ($response->denied()){
+
+            return redirect()->back()->with('error', $response->message());
+        }
+
         $this->validate($request, [
             'title' => 'required',
             'category_id' => 'required',
@@ -76,6 +91,15 @@ class PostController extends Controller
 
     public function show($id)
     {
+        $post =Post::with(['categories'])->where('id', $id)->orWhere('slug', $id)->first();
+       $response = Gate::inspect('view', $post);
+
+       if ($response->denied())
+       {
+           return redirect()->back()->with('error', $response->message());
+       }
+
+
         echo "Comming soon....";
     }
 
@@ -87,7 +111,7 @@ class PostController extends Controller
         $post = Post::with(['categories'])->where('id', $id)->orWhere('slug', $id)->first();
 
 //        Gate::authorize('allow-Action', $post->user->id);
-        $response = Gate::inspect('editAction', $post); //inspect method to get the full authorization response returned by the gate
+        $response = Gate::inspect('update', $post); //inspect method to get the full authorization response returned by the gate
 
         if ($response->denied()){
 
@@ -109,7 +133,16 @@ class PostController extends Controller
             'thumbnail' => 'nullable',
         ]);
 
-        $post = Post::findOrFail($id);
+        $post = Post::where('id', $id)->orWhere('slug', $id)->first();
+
+
+        $response = Gate::inspect('update', $post);
+
+        if ($response->denied())
+        {
+            return redirect()->back()->with('error', $response->message());
+        }
+
 
         if ($request->hasFile('thumbnail')) {
 
@@ -144,7 +177,7 @@ class PostController extends Controller
     {
         $post = Post::where('id', $id)->orWhere('slug', $id)->first();
 
-        $response = Gate::inspect('deleteAction', $post);
+        $response = Gate::inspect('delete', $post);
 
         if ($response->allowed()){
 
