@@ -87,7 +87,7 @@ class PostController extends Controller
         $post = Post::with(['categories'])->where('id', $id)->orWhere('slug', $id)->first();
 
 //        Gate::authorize('allow-Action', $post->user->id);
-        $response = Gate::inspect('allow-edit-action', $post->user->id); //inspect method to get the full authorization response returned by the gate
+        $response = Gate::inspect('editAction', $post); //inspect method to get the full authorization response returned by the gate
 
         if ($response->denied()){
 
@@ -144,7 +144,7 @@ class PostController extends Controller
     {
         $post = Post::where('id', $id)->orWhere('slug', $id)->first();
 
-        $response = Gate::inspect('allow-delete-action', $post->user->id);
+        $response = Gate::inspect('deleteAction', $post);
 
         if ($response->allowed()){
 
