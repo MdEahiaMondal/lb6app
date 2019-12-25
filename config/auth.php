@@ -44,6 +44,8 @@ return [
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
+            'storage_key' => 'token',
+            'input_key' => 'token',
             'hash' => true,
         ],
     ],
@@ -113,5 +115,5 @@ return [
     */
 
     'password_timeout' => 10800, // default(10800)  // here i can change for this 'middleware' => ['auth', 'password.confirm'] to protected my url or group url if you want
-    'storage_key' => 'token_api'
+
 ];

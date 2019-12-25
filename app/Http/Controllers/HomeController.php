@@ -28,7 +28,7 @@ class HomeController extends Controller
         if ($request->isMethod('post')){
             $token = Str::random(80);
             $user = auth()->user();
-            $user->token_api = hash('sha256', $token);
+            $user->token = hash('sha256', $token);
             $user->save();
 
             return  redirect('home')->with('token', $token);
