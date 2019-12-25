@@ -99053,6 +99053,14 @@ tinymce__WEBPACK_IMPORTED_MODULE_0___default.a.init({
     });
   }
 });
+axios.get('/api/user', {
+  'headers': {
+    'Accept': 'application/json',
+    'Authorization': 'Bearer y1zYQVJY4PXwu1nrHS48ub7sXCQBWQVYTr6l61ggNVdoeoBx0QzouuuwRA2cZRRnsPkTwrBTwmLWuiL4'
+  }
+}).then(function (response) {
+  return console.dir(response.data);
+});
 
 /***/ }),
 
