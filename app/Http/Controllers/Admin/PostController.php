@@ -9,8 +9,9 @@ use App\Http\Requests\Post\StorePostRequest;
 use App\Post;
 use App\Role;
 use App\UserProfile;
-use Gate;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -85,7 +86,13 @@ class PostController extends Controller
         $categories = Category::all();
         $post = Post::with(['categories'])->where('id', $id)->orWhere('slug', $id)->first();
 
-        Gate::authorize('allow-Action', $post->user->id);
+//        Gate::authorize('allow-Action', $post->user->id);
+        $response = Gate::inspect('allow-Action', $post->user->id); //inspect method to get the full authorization response returned by the gate
+
+        if ($response->denied()){
+
+            return redirect()->back()->with('error', $response->message());
+        }
 
         return  view('admin.pages.post.edit', compact('categories', 'post'));
     }
@@ -137,15 +144,22 @@ class PostController extends Controller
     {
         $post = Post::where('id', $id)->orWhere('slug', $id)->first();
 
-        Gate::authorize('allow-Action', $post->user->id);
+        $response = Gate::inspect('allow-Action', $post->user->id);
+
+        if ($response->allowed()){
+
+            $post->delete();
+            return redirect()->route('posts.index')->with('success', 'Post deleted success !');
+        }
+        return redirect()->back()->with('error', $response->message());
+
     /*    if (Storage::disk('public')->exists($post->thumbnail)) {
 
             Storage::disk('public')->delete($post->thumbnail);
         }*/  // for soft delte here
 
 //        $post->categories()->detach();
-        $post->delete();
-        return redirect()->route('posts.index')->with('success', 'Post deleted success !');
+
     }
 
 
