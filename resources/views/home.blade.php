@@ -23,7 +23,7 @@
                     </p>
 
                     <p>Encript: {{ request()->user()->secret ?? 'N/A' }}</p>
-                    <p>Decript: {{ decrypt(request()->user()->secret) ?? 'N/A' }}</p>
+                    <p>Decript: {{ ($secret) ?? 'N/A' }}</p>
 
 
                         <form action="{{ route('home') }}" method="post">

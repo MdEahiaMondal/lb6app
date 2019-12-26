@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class HomeController extends Controller
 {
@@ -35,7 +36,15 @@ class HomeController extends Controller
             return  redirect('home')->with('token', $token);
         }
 
-        return view('home');
+
+        try {
+            $secret = decrypt(auth()->user()->secret);
+        } catch (DecryptException $e) {
+           $secret = 'N/A Or Modified';
+        }
+
+
+        return view('home', compact('secret'));
     }
 
 
