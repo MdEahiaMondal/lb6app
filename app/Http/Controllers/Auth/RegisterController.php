@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\WelvomeEmail;
 use App\Providers\RouteServiceProvider;
 use App\Role;
 use App\User;
 use App\UserProfile;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -85,6 +87,8 @@ class RegisterController extends Controller
         $role =  Role::where('name', 'subscriber')->first();
 
         $user->roles()->attach($role->id);
+
+        Mail::to($user)->send(new WelvomeEmail());
 
         return  $user;
     }
