@@ -17,9 +17,16 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->authorizeResource(Post::class, 'post');
+    }
+
     public function index()
     {
-        $posts = Post::with(['user:id,name', 'categories'])->get();
+        $posts = Post::with(['user:id,name', 'categories'])->latest()->get();
         return view('admin.pages.post.index', compact('posts'));
     }
 
@@ -30,12 +37,12 @@ class PostController extends Controller
      */
     public function create()
     {
-       $response =  Gate::inspect('create');
+       /*$response =  Gate::inspect('create');
 
         if ($response->denied()){
 
             return redirect()->back()->with('error', $response->message());
-        }
+        }*/
 
         $categories = Category::all();
         return  view('admin.pages.post.create', compact( 'categories'));
@@ -46,12 +53,12 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-        $response =  Gate::inspect('create');
+       /* $response =  Gate::inspect('create');
 
         if ($response->denied()){
 
             return redirect()->back()->with('error', $response->message());
-        }
+        }*/
 
         $this->validate($request, [
             'title' => 'required',
@@ -89,15 +96,16 @@ class PostController extends Controller
 
 
 
-    public function show($id)
+    public function show(Post $post)
     {
-        $post =Post::with(['categories'])->where('id', $id)->orWhere('slug', $id)->first();
-       $response = Gate::inspect('view', $post);
+//        $post =Post::with(['categories'])->where('id', $id)->orWhere('slug', $id)->first();
+
+       /*$response = Gate::inspect('view', $post);
 
        if ($response->denied())
        {
            return redirect()->back()->with('error', $response->message());
-       }
+       }*/
 
 
         echo "Comming soon....";
@@ -105,25 +113,25 @@ class PostController extends Controller
 
 
 
-    public function edit($id)
+    public function edit(Post $post)
     {
         $categories = Category::all();
-        $post = Post::with(['categories'])->where('id', $id)->orWhere('slug', $id)->first();
-
+//        $post = Post::with(['categories'])->where('id', $id)->orWhere('slug', $id)->first();
+/*
 //        Gate::authorize('allow-Action', $post->user->id);
         $response = Gate::inspect('update', $post); //inspect method to get the full authorization response returned by the gate
 
         if ($response->denied()){
 
             return redirect()->back()->with('error', $response->message());
-        }
+        }*/
 
         return  view('admin.pages.post.edit', compact('categories', 'post'));
     }
 
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
 
         $this->validate($request, [
@@ -133,15 +141,15 @@ class PostController extends Controller
             'thumbnail' => 'nullable',
         ]);
 
-        $post = Post::where('id', $id)->orWhere('slug', $id)->first();
+//        $post = Post::where('id', $id)->orWhere('slug', $id)->first();
 
 
-        $response = Gate::inspect('update', $post);
+       /* $response = Gate::inspect('update', $post);
 
         if ($response->denied())
         {
             return redirect()->back()->with('error', $response->message());
-        }
+        }*/
 
 
         if ($request->hasFile('thumbnail')) {
@@ -173,18 +181,21 @@ class PostController extends Controller
 
     }
 
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        $post = Post::where('id', $id)->orWhere('slug', $id)->first();
+//        $post = Post::where('id', $id)->orWhere('slug', $id)->first();
 
-        $response = Gate::inspect('delete', $post);
+        $post->delete();
+        return redirect()->route('posts.index')->with('success', 'Post deleted success !');
+
+    /*    $response = Gate::inspect('delete', $post);
 
         if ($response->allowed()){
 
             $post->delete();
             return redirect()->route('posts.index')->with('success', 'Post deleted success !');
         }
-        return redirect()->back()->with('error', $response->message());
+        return redirect()->back()->with('error', $response->message());*/
 
     /*    if (Storage::disk('public')->exists($post->thumbnail)) {
 

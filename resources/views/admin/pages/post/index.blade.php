@@ -56,7 +56,7 @@
                         </td>
 
                         <td width="200">
-                            @can("wonPostShowAction", $post)
+{{--                            @can("wonPostShowAction", $post)--}}
                                 <a  href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-secondary">Show</a>
 
                                 <a  href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">Edit</a>
@@ -66,7 +66,7 @@
                                     @csrf
                                     @method('DELETE')
                                 </form>
-                             @endcan
+{{--                             @endcan--}}
                         </td>
 
                     </tr>
