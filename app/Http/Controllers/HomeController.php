@@ -29,6 +29,7 @@ class HomeController extends Controller
             $token = Str::random(80);
             $user = auth()->user();
             $user->token = hash('sha256', $token);
+            $user->secret = encrypt($request->secret);
             $user->save();
 
             return  redirect('home')->with('token', $token);

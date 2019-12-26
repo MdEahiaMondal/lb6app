@@ -21,10 +21,14 @@
                             {{ 'Already Genarate' }}
                          @endif
                     </p>
-{{--                    <p>Token: {{ auth()->user()->token_api ?? 'Already Genarate' }}</p>--}}
+
+                    <p>Encript: {{ request()->user()->secret ?? 'N/A' }}</p>
+                    <p>Decript: {{ decrypt(request()->user()->secret) ?? 'N/A' }}</p>
+
 
                         <form action="{{ route('home') }}" method="post">
                             @csrf
+                            <input type="text" name="secret" class="form-control">
                             <button type="submit" class="btn btn-outline-primary">Genarate Token</button>
                         </form>
                 </div>
