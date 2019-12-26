@@ -7,7 +7,7 @@ Route::view('/', 'welcome');
 
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin',
-    'middleware' => ['auth',]],
+    'middleware' => ['auth','checkRole:admin,publisher,writer,editor,author']],
     function (){
 
     Route::get('/', 'DashboardController@index')->name('admin.dashboard');

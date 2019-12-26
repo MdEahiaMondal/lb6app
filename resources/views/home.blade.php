@@ -14,6 +14,9 @@
                         </div>
                     @endif
 
+                    @include('admin.messages.msg')
+
+
                     <p>Token:
                         @if(session()->has('token'))
                             {{ session()->get('token') }}
