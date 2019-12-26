@@ -17,7 +17,7 @@ class PostPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(?User $user) // (?) thats mains if a user is authcation or not he can access
     {
         return $user;
     }
@@ -31,9 +31,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        $admin = $user->roles->where('name', 'admin')->first();
-        return $post->user_id === $user->id || $admin ?
-            Response::allow() : Response::deny('You are not Authorize to view post');
+        return $post->user_id === $user->id  ? $this::allow() : $this::deny('You are not Authorize to view post');
     }
 
     /**
@@ -54,11 +52,9 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return mixed
      */
-    public function update(User $user, Post $post)
+    public function update(User $user, Post $post) // here ($this) work same to Response  as your choose
     {
-        $role = $user->roles->pluck('name')->toArray();
-        return $user->id === $post->user_id || in_array('admin', $role) ?
-            Response::allow() : Response::deny('You are not Authorize to update post !');
+        return $user->id === $post->user_id ? $this::allow() : $this::deny('You are not Authorize to update post !');
     }
 
     /**
@@ -70,9 +66,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        $role = $user->roles->pluck('name')->toArray();
-        return $user->id === $post->user_id || in_array('admin', $role) ?
-            Response::allow() : Response::deny('You are not Authorize to delete post');
+        return $user->id === $post->user_id ? Response::allow() : Response::deny('You are not Authorize to delete post');
     }
 
     /**
@@ -84,9 +78,7 @@ class PostPolicy
      */
     public function restore(User $user, Post $post)
     {
-        $role = $user->roles->pluck('name')->toArray();
-        return $user->id === $post->user_id || in_array('admin', $role) ?
-            Response::allow() : Response::deny('You are not Authorize to restore post');
+        return $user->id === $post->user_id ? Response::allow() : Response::deny('You are not Authorize to restore post');
     }
 
     /**
@@ -98,17 +90,21 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post)
     {
-        $role = $user->roles->pluck('name')->toArray();
-        return $user->id === $post->user_id || in_array('admin', $role) ?
-            Response::allow() : Response::deny('You are not Authorize to forceDetele post');
+        return $user->id === $post->user_id ? $this::allow() : $this::deny('You are not Authorize to forceDetele post');
     }
 
 
     public function wonPostShowAction(User $user, Post $post)
     {
-        $role = $user->roles->pluck('name')->toArray();
-        return $user->id === $post->user_id || in_array('admin', $role);
-
+        return $user->id === $post->user_id;
     }
+
+
+    public function before(User $user) // For certain users, you may wish to authorize all actions within a given policy. To accomplish this, define a before method on the policy
+    {
+        $admin = $user->roles->where('name', 'admin')->first();
+        return $admin ? true : null;
+    }
+
 
 }
