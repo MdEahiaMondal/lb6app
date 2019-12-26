@@ -6,6 +6,8 @@
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h3>posts <span class="badge badge-secondary">{{ $posts->count() }}</span></h3>
+            <p>{{ $posts->total() }} of {{ $posts->count() }}</p>
+            <p>{{ $posts->previousPageUrl() }}</p>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
                     <a type="button" href="{{ route('posts.create') }}" class="btn btn-sm btn-outline-secondary">New</a>
@@ -56,7 +58,7 @@
                         </td>
 
                         <td width="200">
-{{--                            @can("wonPostShowAction", $post)--}}
+                            @can("wonPostShowAction", $post)
                                 <a  href="{{ route('posts.show', $post->id) }}" class="btn btn-sm btn-secondary">Show</a>
 
                                 <a  href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">Edit</a>
@@ -66,11 +68,18 @@
                                     @csrf
                                     @method('DELETE')
                                 </form>
-{{--                             @endcan--}}
+                             @endcan
                         </td>
 
                     </tr>
                 @endforeach
+
+                <tr>
+                    <td colspan="9">{{ $posts->links() }}</td>
+{{--                    <td colspan="9">{{ $posts->appends(['khan' => 'ami'])->links() }}</td> {{--look like this (http://lb6app.test/admin/posts?khan=ami&page=2)--}}
+{{--                    <td colspan="9">{{ $posts->fragment('ami')->links() }}</td> --}}{{--look like this (http://lb6app.test/admin/posts?page=1#ami)--}}
+                </tr>
+
 
                 </tbody>
 
